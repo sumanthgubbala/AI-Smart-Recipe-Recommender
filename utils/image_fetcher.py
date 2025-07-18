@@ -1,6 +1,10 @@
 import requests
+from dotenv import load_dotenv
+import os
 
-PEXELS_API_KEY = "ohAr5yIEeSMi32jh9UQpjBWKZFHuqcmoC8AjvdGhFVoFHHzfed76rL7S"  # 🔐 Replace with your actual API key
+load_dotenv()
+
+PEXELS_API_KEY = os.getenv("API_KEY") # 🔐 Replace with your actual API key
 
 def fetch_image_url(query):
     url = "https://api.pexels.com/v1/search"
