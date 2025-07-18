@@ -1,11 +1,13 @@
 
 import streamlit as st
 from models.recipe_model import SmartRecipeRecommender
+from utils.image_fetcher import fetch_image_url
+
 
 recommender = SmartRecipeRecommender('data/indian_food.csv')
 
-st.set_page_config(page_title="Smart Recipe Recommender")
-st.title(' Smart Recipe Recommender')
+st.set_page_config(page_title="AI Smart Recipe Recommender")
+st.title('AI Smart Recipe Recommender')
 
 tab1, tab2 = st.tabs(["🔍 By Ingredients", "📖 By Recipe Name"])
 
@@ -27,10 +29,17 @@ with tab1:
             for recipe in results:
 
                 st.markdown(f"### {recipe['RecipeName']}")
+                img_url = fetch_image_url(recipe['RecipeName'] + " dish")
+                if img_url:
+                    st.image(img_url, width=300)
                 st.markdown(f"**Cuisine:** {recipe['Cuisine']}")
                 st.markdown(f"**Time:** {recipe['Time']} mins")
                 st.markdown(f"**Ingredients:** {recipe['Ingredients']}")
                 st.markdown(f"[View Recipe 🔗]({recipe['URL']})")
+                with st.expander("👨‍🍳 Show Instructions"):
+                    steps = recipe['TranslatedInstructions'].split('\n')
+                    for i, step in enumerate(steps):
+                        st.markdown(f"**Step {i+1}:** {step.strip()}")
                 st.markdown("---")
 
 with tab2:
@@ -46,8 +55,15 @@ with tab2:
         else:
             for recipe in results:
                 st.markdown(f"### {recipe['RecipeName']}")
+                img_url = fetch_image_url(recipe['RecipeName'] + " dish")
+                if img_url:
+                    st.image(img_url, width=300)
                 st.markdown(f"**Cuisine:** {recipe['Cuisine']}")
                 st.markdown(f"**Time:** {recipe['Time']} mins")
                 st.markdown(f"**Ingredients:** {recipe['Ingredients']}")
                 st.markdown(f"[View Recipe 🔗]({recipe['URL']})")
+                with st.expander("👨‍🍳 Show Instructions"):
+                    steps = recipe['TranslatedInstructions'].split('\n')
+                    for i, step in enumerate(steps):
+                        st.markdown(f"**Step {i+1}:** {step.strip()}")
                 st.markdown("---")

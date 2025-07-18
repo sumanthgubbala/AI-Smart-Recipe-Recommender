@@ -31,7 +31,8 @@ class SmartRecipeRecommender:
                 'Cuisine': row['Cuisine'],
                 'Time': row['TotalTimeInMins'],
                 'Ingredients': row['Cleaned-Ingredients'],
-                'URL': row['URL']
+                'URL': row['URL'],
+                'TranslatedInstructions': row['TranslatedInstructions']
             })
         
         return recommendations
@@ -54,6 +55,7 @@ class SmartRecipeRecommender:
                 'Cuisine': row['Cuisine'],
                 'Time': row['TotalTimeInMins'],
                 'Ingredients': row['Cleaned-Ingredients'],
-                'URL': row['URL']
+                'URL': row['URL'],
+                'TranslatedInstructions': row['TranslatedInstructions']
             })
         return recommendations
