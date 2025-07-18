@@ -29,7 +29,7 @@ with tab1:
             for recipe in results:
 
                 st.markdown(f"### {recipe['RecipeName']}")
-                img_url = fetch_image_url(recipe['RecipeName'] + " dish")
+                img_url = fetch_image_url(recipe['RecipeName'])
                 if img_url:
                     st.image(img_url, width=300)
                 st.markdown(f"**Cuisine:** {recipe['Cuisine']}")
