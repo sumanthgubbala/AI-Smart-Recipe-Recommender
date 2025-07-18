@@ -1,7 +1,7 @@
 
 import streamlit as st
 from models.recipe_model import SmartRecipeRecommender
-from utils.image_fetcher import fetch_image_url
+from utils.image_fetcher import get_image_by_class
 
 
 recommender = SmartRecipeRecommender('data/indian_food.csv')
@@ -29,7 +29,7 @@ with tab1:
             for recipe in results:
 
                 st.markdown(f"### {recipe['RecipeName']}")
-                img_url = fetch_image_url(recipe['RecipeName'])
+                img_url = get_image_by_class(recipe['URL'])
                 if img_url:
                     st.image(img_url, width=300)
                 st.markdown(f"**Cuisine:** {recipe['Cuisine']}")
@@ -55,7 +55,7 @@ with tab2:
         else:
             for recipe in results:
                 st.markdown(f"### {recipe['RecipeName']}")
-                img_url = fetch_image_url(recipe['RecipeName'] + " dish")
+                img_url = get_image_by_class(recipe['URL'])
                 if img_url:
                     st.image(img_url, width=300)
                 st.markdown(f"**Cuisine:** {recipe['Cuisine']}")
