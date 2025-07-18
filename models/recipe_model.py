@@ -35,3 +35,25 @@ class SmartRecipeRecommender:
             })
         
         return recommendations
+    
+    def recommend_by_recipe_name(self,recipe_name,top_n=5):
+
+        if recipe_name not in self.df['TranslatedRecipeName'].values:
+            return f"'{recipe_name}' not found in dataset."
+        
+        idx = self.df[self.df['TranslatedRecipeName'] == recipe_name].index[0]
+
+        sim_scores = list(enumerate(self.similarity_matrix[idx]))
+        sim_scores = sorted(sim_scores,key= lambda x: x[1], reverse=True)[1:top_n+1]
+
+        recommendations = []
+        for i, score in sim_scores:
+            row = self.df.iloc[i]
+            recommendations.append({
+                'RecipeName': row['TranslatedRecipeName'],
+                'Cuisine': row['Cuisine'],
+                'Time': row['TotalTimeInMins'],
+                'Ingredients': row['Cleaned-Ingredients'],
+                'URL': row['URL']
+            })
+        return recommendations

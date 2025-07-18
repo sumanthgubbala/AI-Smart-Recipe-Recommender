@@ -35,4 +35,19 @@ with tab1:
 
 with tab2:
     st.subheader("Enter the name of a recipe you like:")
-    recipe_name = st.text_input("Example: Aloo Gobi")
+    recipe_names = sorted(recommender.df['TranslatedRecipeName'].unique())
+    selected_recipe = st.selectbox("Choose a recipe", recipe_names)
+
+    if st.button("Find Similar Recipes", key='name_button'):
+        results = recommender.recommend_by_recipe_name(selected_recipe)
+
+        if isinstance(results, str):
+            st.error(results)
+        else:
+            for recipe in results:
+                st.markdown(f"### {recipe['RecipeName']}")
+                st.markdown(f"**Cuisine:** {recipe['Cuisine']}")
+                st.markdown(f"**Time:** {recipe['Time']} mins")
+                st.markdown(f"**Ingredients:** {recipe['Ingredients']}")
+                st.markdown(f"[View Recipe 🔗]({recipe['URL']})")
+                st.markdown("---")
